@@ -1,18 +1,9 @@
-// rats.cpp
 #define MAIN_CPP
-#include <iostream>
-#include <string>
-#include <random>
-#include <utility>
-#include <cstdlib>
-#include <cctype>
-using namespace std;
-#include "globals.h"
-#include "rat.h"
-#include "arena.h"
-#include "player.h"
-#include "game.h"
+#include "utilities.cpp"
 #include "rat.cpp"
+#include "arena.cpp"
+#include "player.cpp"
+#include "game.cpp"
 
 
 ///////////////////////////////////////////////////////////////////////////

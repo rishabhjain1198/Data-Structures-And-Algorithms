@@ -4,7 +4,7 @@
 #include "globals.h"
 
 class Rat;
-class Player;
+class Player;	
 
 
 class Arena
@@ -42,6 +42,5 @@ private:
 	void checkPos(int r, int c) const;
 	bool isPosInBounds(int r, int c) const;
 };
-
 
 #endif
