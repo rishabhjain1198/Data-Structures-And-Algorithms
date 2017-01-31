@@ -439,32 +439,5 @@ void interleave(const Sequence& seq1, const Sequence& seq2, Sequence& result)
 
 int main()
 {
-                            //abstract test cases
-    Sequence t;
-    Sequence q;
-    t.insert("hello");
-    t.insert("yolo");
-    t.insert(2, "potaf");
-    t.remove("hello");
-    q.insert("this");
-    q.insert("haiehq");
-   
-    t.swap(q);
-    
-    t.dump();
-
-    q.dump();
-    
-    Sequence fina;
-    
-    interleave(t, q, fina);
-    
-    Sequence test;
-    test.insert(0, "this");
-    test.insert(1, "potaf");
-    
-    cerr<<subsequence(fina, test)<<endl;
-    
-    fina.dump();
-  
+    return 0;
 }

@@ -1,3 +1,96 @@
 DESIGN 
 -----------------------
+Each node in the list has two pointers, one to the node behind it and the other to the node in front of it, along with the ItemType value itself. This allows us to add or remove elements easily, since only the node behind and after the desired node will be modified. To loop through and display the contents of the sequence, we can start at the first node, output the value, go to the next one and repeat the process until the node we're at is a empty  (null pointer).
 
+PSEUDOCODE
+----------------------
+bool insert()
+Loop through the list until we reach the desired position. Create a new node and store the desired value into it. Set the prev and next value of the new node to the required values and change the next value of the prev node and the prev value of the next node. Implement trivial situations of when node is to be inserted at the top, or at the end, or it is the first node. Increasethe size of the sequence by 1. Make sure to care of situation when pos is invalid.
+
+int insert()
+Loop through the list until we find the desired position according to value instead of position itself. Follow the same steps of insertion as in bool insert().
+
+bool erase()
+Loop through list until we reach the desired position. Delete memory allocated to the node of that position. Set the next value of the prev node as the next node, and the prev value of the next as the prev node. Reduce the size of the sequence by 1. Take care of case when pos is invalid.
+
+int remove()
+Loop through the entire list. Whenever a value equal to the inputted value is found, run the same node removal code as in bool erase().
+
+bool get()
+Loop through the list until we get to the desired position. Get value from node and put it into passed variable. Make sure pos is valid.
+
+bool set()
+Loop through the list until we get to the desired position. Get value from passed variable and put it into node. Make sure pos is valid.
+
+int find()
+Loop through list until we get to a node which contains the desired value, and output the position of the node.
+
+void swap()
+The only unique things about list are the first node and their size. Exchange those things.
+
+
+TEST CASES
+-----------------------------
+TEST CASES FOR WHEN ITEMTYPE IS DEFINED AS UNSIGNED LONG
+    Sequence s;
+    Sequence a;
+    
+    assert(s.empty()); // s should be empty
+    assert(a.empty()); // a should be empty
+    
+    for (int i = 0; i < 200; i++)
+    {
+        s.insert(i);        // Insert 200 items in s
+    }
+    
+    assert(s.size() == 200);    // Size of s should be 200
+    s.swap(a);  // Swap the random values from a for numbers 0-200 into a
+    assert(a.size() == 200);    // Check to see if the size is 200
+    for (int k = 0; k < 100; k++)
+    {
+        a.remove(k);    //remove the first 100 numbers
+    }
+//    assert(a.size() == 100);    // Size should be 100
+    cout << a.size() << endl<< endl;
+    Sequence r;
+    r.insert(r.size(), 21); // Inserts at the last position
+    r.insert(r.size(), 42); // Inserts at the last position
+    cout << r.find(42);    // checks to see if find is input in the correct location
+    assert(!r.insert(5, 69));   // makes sure that we cant insert something into a position thats greater than the size
+    assert(!r.erase(3));    // makes sure we cant erase something at a position that is greater than the size
+    assert(r.erase(1));     // erases whats at position 1, which in this case is 42
+    assert(r.size() == 1);
+    unsigned long socool = 33;
+    assert(r.get(0, socool) && socool == 21);   // tests to make sure that at position 0 we have 21 and x will get that value
+    unsigned long toocool = 968;
+    assert(r.set(0, toocool) && r.find(968) == 0);    // replaces 21 with 968 at position 0 and makes sure its located there using find
+
+
+TEST CASES FOR WHEN ITEMTYPE IS DEFINED AS STD::STRING
+    Sequence t;	//checking default constructor
+    Sequence q;
+    t.insert("hello");	//checking insert function
+    t.insert("yolo");
+    t.insert(2, "potaf");	//checking other insert function
+    t.remove("hello");		//checking remove function
+    q.insert("this");
+    q.insert("haiehq");
+   
+    t.swap(q);			//checking swap function
+    
+    t.dump();			//dumping contents to evaluate
+
+    q.dump();
+    
+    Sequence fina;
+    
+    interleave(t, q, fina);	//checking interleaving
+
+	fina.dump();
+    
+    Sequence test;
+    test.insert(0, "this");
+    test.insert(1, "potaf");	//creating new sequence to test subsequence
+    
+    cerr<<subsequence(fina, test)<<endl;	//outputting to evaluate subsequence
+    

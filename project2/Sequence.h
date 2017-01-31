@@ -43,5 +43,8 @@ private:
     int seqSize;
 };
 
+int subsequence(const Sequence& seq1, const Sequence& seq2);
+
+void interleave(const Sequence& seq1, const Sequence& seq2, const Sequence& result);
 
 #endif /* Sequence_h */
