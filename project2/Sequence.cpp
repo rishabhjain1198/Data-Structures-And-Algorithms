@@ -8,16 +8,19 @@
 
 #include "Sequence.h"
 #include<iostream>
+#include<cassert>
+
+using namespace std;
 
 Sequence::Sequence()
 {
-    first = nullptr;
+    first = nullptr;	//setting list as empty
     seqSize = 0;
 }
 
 Sequence::~Sequence()
 {
-    Node *temp = first;
+    Node *temp = first;	//temporary pointer towards head of list made, which is then moved forward and each node is deleted one by one
     
     while(temp != nullptr)
     {
@@ -31,7 +34,7 @@ Sequence::Sequence(const Sequence &src)
 {
     for(int i = 0; i < src.size(); i++)
     {
-        ItemType val;
+        ItemType val;		//looping through every value in source list, and inserting each value one by one into destination list
         src.get(i, val);
         insert(i, val);
     }
@@ -41,12 +44,12 @@ Sequence & Sequence::operator = (const Sequence &src)
 {
     while(size() != 0)
     {
-        erase(0);
+        erase(0);		//first we have to remove pre-existing contents of the destination list
     }
     
     for(int i = 0; i < src.size(); i++)
     {
-        ItemType val;
+        ItemType val;       //now we do exactly what we did for assignment operator
         src.get(i, val);
         insert(i, val);
     }
@@ -56,7 +59,7 @@ Sequence & Sequence::operator = (const Sequence &src)
 
 bool Sequence::empty() const
 {
-    if(seqSize == 0)
+    if(seqSize == 0)        //if size of list is 0, it is empty
         return true;
     
     return false;
@@ -64,24 +67,24 @@ bool Sequence::empty() const
 
 int Sequence::size() const
 {
-    return seqSize;
+    return seqSize;         //returns size of list
 }
 
 bool Sequence::insert(int pos, const ItemType &value)
 {
     if(pos < 0 || pos > seqSize)
-        return false;
+        return false;       //stop function if pos is invalid
     
     if(first == nullptr)
     {
-        first = new Node;
+        first = new Node;           //if the first node is being inserted, we need to take special care
         first -> prev = nullptr;
         first -> next = nullptr;
         first -> value = value;
     }
     else
     {
-        Node *temp = first;
+        Node *temp = first;         //now we loop through the list until we get to the desired pos. Every time we go a step forward, we remember the node we leave behind
         Node *peeche = nullptr;
         int i = 0;
         while(i != pos)
@@ -92,7 +95,7 @@ bool Sequence::insert(int pos, const ItemType &value)
         }
         
         //The new node is to be inserted between temp and peeche
-        if(temp == nullptr)
+        if(temp == nullptr)     //special case of node being at the end of the list
         {
             temp = new Node;
             temp -> prev = peeche;
@@ -103,7 +106,7 @@ bool Sequence::insert(int pos, const ItemType &value)
                 peeche -> next = temp;
         }
         
-        else {
+        else {      //if node is to be inserted anywhere else in the list
             Node *newvalue = new Node;
             newvalue->next = temp;
             newvalue -> prev = peeche;
@@ -120,7 +123,7 @@ bool Sequence::insert(int pos, const ItemType &value)
         }
     }
     
-    seqSize++;
+    seqSize++;          //increase size of list by 1
     
     return true;
 }
@@ -129,7 +132,7 @@ int Sequence::insert(const ItemType &value)
 {
     int i = 0;
  
-    if(first == nullptr)
+    if(first == nullptr)        //if first node is being inserted, special care has to be taken
     {
         first = new Node;
         first -> prev = nullptr;
@@ -141,7 +144,7 @@ int Sequence::insert(const ItemType &value)
         Node *temp = first;
         Node *peeche = nullptr;
         
-        while(true)
+        while(true)         //now we loop through the list until we get to the desired value. We make sure to remember the node when we leave it behind (in peeche)
         {
             if(temp == nullptr)
                 break;
@@ -157,7 +160,7 @@ int Sequence::insert(const ItemType &value)
         
         //The new node is to be inserted between temp and peeche
         
-        if(temp == nullptr)
+        if(temp == nullptr)     //the rest of the implementation is exactly like that of the Boolean insert function
         {
             temp = new Node;
             temp -> prev = peeche;
@@ -195,7 +198,7 @@ int Sequence::insert(const ItemType &value)
 
 bool Sequence::erase(int pos)
 {
-    if(pos < 0 || pos >= seqSize)
+    if(pos < 0 || pos >= seqSize)       //if pos is invalid, function is immediately stopped
         return false;
     
     int i = 0;
@@ -203,7 +206,7 @@ bool Sequence::erase(int pos)
     Node *temp = first;
     Node *peeche = nullptr;
     
-    while(i != pos)
+    while(i != pos)     //we loop through the list to find the desired pos
     {
         peeche = temp;
         temp = temp -> next;
@@ -231,7 +234,7 @@ bool Sequence::erase(int pos)
             aage -> prev = peeche;
     }
     
-    seqSize--;
+    seqSize--;          //reduce size by 1
     return true;
 }
 
@@ -243,7 +246,7 @@ int Sequence::remove(const ItemType &value)
     Node *temp = first;
     Node *peeche = nullptr;
     
-    while(temp != nullptr)
+    while(temp != nullptr)      //very similar implementation when compared to erase, the difference being the node removal code is executed every time a particular value is found, rather than on a particular position
     {
         if(temp -> value == value)
         {
@@ -264,7 +267,7 @@ int Sequence::remove(const ItemType &value)
                     peeche -> next = temp;
             }
             
-            counter++;
+            counter++;          //to keep track of how many nodes have been removed
             seqSize--;
             
         }
@@ -286,13 +289,13 @@ bool Sequence::get(int pos, ItemType &value) const
     int i = 0;
     Node *temp = first;
     
-    while(i!=pos)
+    while(i!=pos)       //loop through to the desired position
     {
         temp = temp -> next;
         i++;
     }
     
-    value = temp->value;
+    value = temp->value;        //store desired value in the variable
         
     
     return true;
@@ -305,13 +308,13 @@ bool Sequence::set(int pos, const ItemType &value)
     
     int i = 0;
     Node * temp = first;
-    while(i!=pos)
+    while(i!=pos)           //loop through to the desired position
     {
         temp = temp -> next;
         i++;
     }
     
-    temp -> value = value;
+    temp -> value = value;      //store desired value in the node
     
     return true;
 }
@@ -323,11 +326,11 @@ int Sequence::find(const ItemType &value) const
     
     Node *temp = first;
     
-    while(temp != nullptr)
+    while(temp != nullptr)          //loop through until end of list or until you find the desired value
     {
         if(temp -> value == value)
         {
-            p = i;
+            p = i;      //if desired value is found, set p equal to the position of that node
             break;
         }
         i++;
@@ -339,7 +342,7 @@ int Sequence::find(const ItemType &value) const
 
 void Sequence::swap(Sequence &other)
 {
-    Node *temp = first;
+    Node *temp = first;     //exchange the head nodes of the two sequences and their sizes
     first = other.first;
     other.first = temp;
     int tempSize = seqSize;
@@ -349,25 +352,25 @@ void Sequence::swap(Sequence &other)
 
 void Sequence::dump() const
 {
-    Node *temp = first;
+    Node *temp = first;         //simply loop through the list and output every single value
     while(temp != nullptr)
     {
-        std::cerr<<temp -> value<<std::endl;
+        cerr<<temp -> value<<endl;
         temp = temp-> next;
     }
-    std::cerr<<std::endl;
+    cerr<<endl;
 }
 
 int subsequence(const Sequence& seq1, const Sequence& seq2)
 {
-    if(seq2.size() == 0)
+    if(seq2.size() == 0)        //if seq2 is empty, stop function
         return -1;
     
     for(int i = 0; i < seq1.size(); i++)
     {
-        for(int j = 0; j < seq2.size(); j++)
+        for(int j = 0; j < seq2.size(); j++)    //for every node in seq1, loop through all nodes in seq2, as long as we find equal relative values
         {
-            if(i+j < seq1.size())
+            if(i+j < seq1.size())       //to make sure we dont go out of bounds
             {
                 ItemType temp1;
                 ItemType temp2;
@@ -377,33 +380,32 @@ int subsequence(const Sequence& seq1, const Sequence& seq2)
                 {
                     if(j == seq2.size() - 1)
                     {
-                        return i;
+                        return i;       //last node of seq2 has found a match, return the position of the node of seq1
                     }
-                }
+                }               //desired value not found, no point on continuing on this particular node of seq1
                 else
                     break;
-            }
+            }               //we will definitely go out of bounds if we would have continued, so top acting on this particular node of seq1
             else
                 break;
         }
     }
     
-    return -1;
-    
+    return -1;          //no match was found
 }
 
 void interleave(const Sequence& seq1, const Sequence& seq2, Sequence& result)
 {
-    Sequence temp;
+    Sequence temp;      //this is where the result of interleaving will be temporarily stored, to avoid problems in aliasing
     int i = 0;
     int j = 0;
-    while(i < seq1.size() && i < seq2.size())
+    while(i < seq1.size() && i < seq2.size())       //loop through the sequences until either of them ends
     {
         ItemType val1;
         ItemType val2;
         seq1.get(i, val1);
         seq2.get(i, val2);
-        
+                                //get 1 value from each list, and insert them into the temporary list one by one
         temp.insert(j, val1);
         j++;
         temp.insert(j, val2);
@@ -412,7 +414,7 @@ void interleave(const Sequence& seq1, const Sequence& seq2, Sequence& result)
         i++;
     }
     
-    while(i < seq1.size())
+    while(i < seq1.size())      //in case seq2 ran out first, insert the rest of the elements of seq1 into temp
     {
         ItemType val1;
         seq1.get(i, val1);
@@ -422,7 +424,7 @@ void interleave(const Sequence& seq1, const Sequence& seq2, Sequence& result)
         i++;
     }
     
-    while(i < seq2.size())
+    while(i < seq2.size())      //in case seq1 ran out first, insert the rest of the elements of seq2 into temp
     {
         ItemType val2;
         seq2.get(i, val2);
@@ -432,34 +434,37 @@ void interleave(const Sequence& seq1, const Sequence& seq2, Sequence& result)
         i++;
     }
     
-    result = temp;
+    result = temp;          //copy the sequence into the desired location
 }
 
 int main()
 {
-    Sequence s;
+                            //abstract test cases
+    Sequence t;
     Sequence q;
-    s.insert("hello");
-    s.insert("yolo");
-    s.insert(2, "potaf");
-    s.remove("hello");
+    t.insert("hello");
+    t.insert("yolo");
+    t.insert(2, "potaf");
+    t.remove("hello");
     q.insert("this");
     q.insert("haiehq");
    
-    s.swap(q);
-    s.dump();
+    t.swap(q);
+    
+    t.dump();
 
     q.dump();
     
     Sequence fina;
     
-    interleave(s, q, fina);
+    interleave(t, q, fina);
     
     Sequence test;
     test.insert(0, "this");
     test.insert(1, "potaf");
     
-    std::cerr<<subsequence(fina, test)<<std::endl;
-  
+    cerr<<subsequence(fina, test)<<endl;
+    
     fina.dump();
+  
 }
