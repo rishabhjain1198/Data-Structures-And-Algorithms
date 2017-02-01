@@ -8,9 +8,6 @@
 
 #include "Sequence.h"
 #include<iostream>
-#include<cassert>
-
-using namespace std;
 
 Sequence::Sequence()
 {
@@ -355,10 +352,10 @@ void Sequence::dump() const
     Node *temp = first;         //simply loop through the list and output every single value
     while(temp != nullptr)
     {
-        cerr<<temp -> value<<endl;
+	    std::cerr<<temp -> value<<std::endl;
         temp = temp-> next;
     }
-    cerr<<endl;
+    std::cerr<<std::endl;
 }
 
 int subsequence(const Sequence& seq1, const Sequence& seq2)
