@@ -9,9 +9,9 @@
 #ifndef Sequence_h
 #define Sequence_h
 
-#include<string>
+#include "OurType.h"
 
-typedef std::string ItemType;
+typedef OurType ItemType;
 
 struct Node
 {
