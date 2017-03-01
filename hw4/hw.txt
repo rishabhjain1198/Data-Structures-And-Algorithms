@@ -1,0 +1,2 @@
+2. 
+value > p->m_value (Line 186) causes an error, since here, both LHS and RHS are defined to be of type Complex, and no comparison operator has been defined for this class. The compiler error given is “invalid operands to binary expression”.
