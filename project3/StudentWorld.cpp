@@ -13,7 +13,7 @@ GameWorld* createStudentWorld(string assetDir)
 StudentWorld::StudentWorld(std::string assetDir)
 : GameWorld(assetDir)
 {
-    for(int i = 0; i < VIEW_WIDTH; i++)
+    for(int i = 0; i < VIEW_WIDTH; i++)     //go through every cell of the data structure and empty it
     {
         for(int j = 0; j < VIEW_HEIGHT; j++)
         {
@@ -24,18 +24,18 @@ StudentWorld::StudentWorld(std::string assetDir)
         }
     }
     
-    for(int i = 0; i < 4; i++)
+    for(int i = 0; i < 4; i++)          //initialize the ant produced array to 0
         antProduced[i] = 0;
 }
 
 StudentWorld::~StudentWorld()
 {
-    cleanUp();
+    cleanUp();              //simply let the cleanUp function do the destructor's work
 }
 
 int StudentWorld::init()
 {
-    tickCounter = 2000;
+    tickCounter = 2000;         //start the tick counter from 2000
     string fieldFileName;
     Field f;
     
@@ -536,7 +536,7 @@ int StudentWorld::eatFood(int x, int y, int eatingAttempt)
 
 void StudentWorld::stunThem(int x, int y, int stunValue)
 {
-    for(int i = 0; i < field[x][y][BBYGRASS_INDEX].size(); i++)
+    for(int i = 0; i < field[x][y][BBYGRASS_INDEX].size(); i++)     //check if actor had been stunned before by pool. Stun the actor by the passed stun value
     {
         if(field[x][y][BBYGRASS_INDEX][i] -> poolSleeping() ==  false){
             field[x][y][BBYGRASS_INDEX][i] -> sleeping(stunValue);
@@ -597,7 +597,7 @@ void StudentWorld::createPheromone(int x, int y, int colony)
         }
     }
     
-    if(alreadyExist == false)
+    if(alreadyExist == false)   
     {
         Actor* temp = new Pheromone(idd, this, x, y, colony);
         field[x][y][PHEROMONE_INDEX].push_back(temp);

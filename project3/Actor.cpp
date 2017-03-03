@@ -4,7 +4,7 @@
 // Students:  Add code to this file (if you wish), Actor.h, StudentWorld.h, and StudentWorld.cpp
 
 //--------------------AUX-FUNCTIONS-------------------
-Actor::Direction Actor::randDir()
+Actor::Direction Insect::randDir()
 {
     int i = randInt(1,4);       //create a random integer, and resolve it into a direction
     switch(i)
@@ -25,7 +25,7 @@ Actor::Direction Actor::randDir()
     return none;
 }
 
-void Actor::dirResolver(int &x, int &y, Direction dir)
+void Insect::dirResolver(int &x, int &y, Direction dir)
 {
     switch(dir)     //move a step in that direction
     {
@@ -50,11 +50,13 @@ void Actor::dirResolver(int &x, int &y, Direction dir)
 
 Actor::Actor(int const id1, StudentWorld* const world, int const x, int const y, Direction const d, int const depth) : GraphObject(id1, x, y, d, depth), m_myWorld(world), m_dir(d), m_depth(depth), m_id(id1)
 {
-    m_sleeping = 0;             //sets sleeping to false so it can move
     m_dead = false;             //actor isn't dead
-    m_poolSleep = false;;       //this keeps track of whether stunned by pool or not
 }
 
+void Actor::isBitten(int bitingPower, int x, int y) {}      //dummy functions created to make use of later, virtually
+bool Actor::poolSleeping() { return false;}
+bool Actor::poolSleeping(bool changer){return false;}
+int Actor::sleeping(int changer) { return 1;}
 
 int Actor::health()
 {
@@ -77,20 +79,20 @@ void Actor::setHealth(int newHealth)
     m_health = newHealth;           //sets health to new value
 }
 
-int Actor::sleeping(int changer)
+int Insect::sleeping(int changer)
 {
     m_sleeping += changer;          //increments the sleeping counter by changer value
     return m_sleeping;                 //and returns the new value
 }
 
 
-int Actor::biting(int canBite)
+int Insect::biting(int canBite)
 {
     m_canBite += canBite;       //increments the biting power by canBite value and returns
     return m_canBite;          //the new value
 }
 
-void Actor::canBeBitten(bool canbebitten)
+void Insect::canBeBitten(bool canbebitten)
 {
     m_canBeBitten = canbebitten;            //changes whether actor can be bitten or not
 }
@@ -105,7 +107,7 @@ StudentWorld* Actor::world()
     return m_myWorld;                       //keeps track of the actor's world
 }
 
-void Actor::isBitten(int bitingPower, int x, int y)
+void Insect::isBitten(int bitingPower, int x, int y)
 {
     //do nothing, this is implemented in derived classes
 }
@@ -121,23 +123,29 @@ void Actor::changeId(int newId)
     m_id = newId;                       //changes the id of the actor
 }
 
-bool Actor::poolSleeping(bool changer)      //changes whether actor is stunned by pool or not
+bool Insect::poolSleeping(bool changer)      //changes whether actor is stunned by pool or not
 {
     m_poolSleep = changer;
     return m_poolSleep;
 }
 
-bool Actor::poolSleeping()
+bool Insect::poolSleeping()
 {
     return m_poolSleep;                 //returns whether actor is stunned by pool or not
+}
+
+//----------------------INSECT---------------------------
+
+Insect::Insect(int const idd, int const depth, Direction const dir, StudentWorld* const world, int const x, int const y) : Actor(idd, world, x, y, dir, depth)
+{
+        m_poolSleep = false;;       //this keeps track of whether stunned by pool or not
+        m_sleeping = 0;             //sets sleeping to false so it can move
 }
 
 //----------------------PEBBLE---------------------------
 
 Pebble::Pebble(StudentWorld* const world, int const x, int const y) : Actor(IID_ROCK, world, x, y, right, 1)
 {
-    biting(0);                      //pebble can't bite
-    canBeBitten(false);             //pebble can't be bitten
 }
 
 void Pebble::doSomething()
@@ -246,7 +254,7 @@ void BabyGrasshopper::isBitten(int bitingPower, int x, int y)
 
 //-----------------------GRASSHOPPERS-CLASS---------------
 
-Grasshopper::Grasshopper(int const id1, Direction const dir, StudentWorld* const world, int const x, int const y) : Actor(id1, world, x, y, dir, 0)
+Grasshopper::Grasshopper(int const id1, Direction const dir, StudentWorld* const world, int const x, int const y) : Insect(id1, 0, dir, world, x, y)
 {
     canBeBitten(true);                      //grasshoppers can be bitten
     
@@ -384,8 +392,8 @@ void AdultGrasshopper::findSpot(int &x, int &y, int r)
     {
         for(int j = 0; j < VIEW_HEIGHT; j++) {
     
-    if(sqrt(((i-x)*(i-x)) - ((j - y) * (j - y))) > r)       //if too far away, return immediately
-        return ;
+    if(sqrt(((i-x)*(i-x)) - ((j - y) * (j - y))) <= r)       //if not too far away
+    {
     
     if(!(world() -> isPebble(i, j)) && (i != x || j != y))  //if not far away and no pebble
     {
@@ -393,7 +401,7 @@ void AdultGrasshopper::findSpot(int &x, int &y, int r)
         y = j;
         return;
     }
-        } }
+    } }}
 }
 
 //----------------------------FOOD-----------------------------------
@@ -508,7 +516,7 @@ void Anthill::doSomething()
 
 //--------------------------ANT-------------------------------------------
 
-Ant::Ant(int const idd, StudentWorld* const world, int const x, int const y, int const colony, Compiler* const tempo) : Actor(idd, world, x, y, randDir(), 1)
+Ant::Ant(int const idd, StudentWorld* const world, int const x, int const y, int const colony, Compiler* const tempo) : Insect(idd, 1, randDir(), world, x, y)
 {
     setHealth(1500);
     m_foodHeld = 0;
@@ -521,7 +529,7 @@ Ant::Ant(int const idd, StudentWorld* const world, int const x, int const y, int
     m_compilerOwner = tempo;
 }
 
-bool Ant::interpreter(Compiler::Command cmd, int &gotoif, bool &mustReturn, int &tickCount)
+void Ant::interpreter(Compiler::Command cmd, int &gotoif, bool &mustReturn, int &tickCount)
 {
        //gotoif keeps track of what command it was
                         // 0 means not go to or if
@@ -728,10 +736,10 @@ void Ant::isBitten(int bitingPower, int x, int y)
 {
     //need to make sure that its bite is recorded
     setHealth(health()-bitingPower);
-    if(health() <= 0)
+    if(health() <= 0){
         setDead();
     
-    world() -> addFood(getX(), getY(), 100, world());
+        world() -> addFood(getX(), getY(), 100, world()); }
     
     wasBitten = true;
 }
@@ -792,8 +800,10 @@ void Ant::doSomething()
                 {
                     if (m_compilerOwner -> getCommand(m_rowNumber,cmd))
                     {       //get command of that particular row number
+                        std::cout<<cmd.text<<std::endl;
                     gotoif = 0; bool mustReturn = false;
                     interpreter(cmd, gotoif, mustReturn, tickCount);
+                    wasBitten = false;
                     if(gotoif == 0)     //must go to next line of instruction
                         m_rowNumber++;
                 

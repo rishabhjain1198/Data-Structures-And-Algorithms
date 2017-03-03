@@ -19,18 +19,15 @@ public:
     bool isDead();
     void setDead();
     void setHealth(int newHealth);
-    int sleeping(int changer);
-    int biting(int canBite);
-    void canBeBitten(bool canbebitten);
-    virtual void isBitten(int bitingPower, int x, int y);
+
     int id();
     void changeId(int newId);
     StudentWorld* world();
-    void dirResolver(int &x, int &y, Direction dir);
+    virtual void isBitten(int bitingPower, int x, int y);
+    virtual bool poolSleeping();
+    virtual bool poolSleeping(bool changer);
+        virtual int sleeping(int changer);
     void notDeadAnymore();
-    bool poolSleeping();
-    bool poolSleeping(bool changer);
-    Direction randDir();
 
 private:
     int m_health;
@@ -38,13 +35,32 @@ private:
     Direction m_dir;
     int m_depth;
     bool m_dead;
-    int m_sleeping;
-    int m_canBite;
-    bool m_canBeBitten;
+
+    
     int m_id;
-    bool m_poolSleep;
+
 };
 
+class Insect : public Actor
+{
+public:
+    Insect(int const idd, int const depth, Direction const dir, StudentWorld* const world, int const x, int const y);
+    virtual void doSomething() = 0;
+    bool poolSleeping();
+    bool poolSleeping(bool changer);
+    Direction randDir();
+    void dirResolver(int &x, int &y, Direction dir);
+    int sleeping(int changer);
+    int biting(int canBite);
+    void canBeBitten(bool canbebitten);
+    virtual void isBitten(int bitingPower, int x, int y);
+private:
+        bool m_poolSleep;
+    int m_canBite;
+    bool m_canBeBitten;
+        int m_sleeping;
+
+};
 
 class Pebble : public Actor
 {
@@ -53,7 +69,7 @@ public:
     virtual void doSomething();
 };
 
-class Grasshopper : public Actor
+class Grasshopper : public Insect
 {
 public:
     Grasshopper(int const id1, Direction const dir, StudentWorld* const world, int const x, int const y);
@@ -122,12 +138,12 @@ private:
     Compiler* m_compiler;
 };
 
-class Ant : public Actor
+class Ant : public Insect
 {
 public:
     Ant(int const idd, StudentWorld* const world, int const x, int const y, int const colony, Compiler* const tempo);
     virtual void doSomething();
-    bool interpreter(Compiler::Command cmd, int &gotoif, bool &mustReturn, int &tickCount);
+    void interpreter(Compiler::Command cmd, int &gotoif, bool &mustReturn, int &tickCount);
     void tryToMove();
     virtual void isBitten(int bitingPower, int x, int y);
 private:
