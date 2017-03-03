@@ -23,7 +23,7 @@
 
 // Students:  Add code to this file, StudentWorld.cpp, Actor.h, and Actor.cpp
 class Actor;
-
+class Compiler;
 class StudentWorld : public GameWorld
 {
 public:
@@ -64,6 +64,8 @@ private:
     int antProduced [4];
     int tickCounter;
     bool compiledCorrectly[4];
+    Compiler *compilerForEntrant0, *compilerForEntrant1,
+    *compilerForEntrant2, *compilerForEntrant3;
     int winningAnt;
     
     /*

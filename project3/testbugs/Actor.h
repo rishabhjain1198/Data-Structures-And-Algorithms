@@ -19,7 +19,7 @@ public:
     bool isDead();
     void setDead();
     void setHealth(int newHealth);
-    Direction randDir();
+
     int id();
     void changeId(int newId);
     StudentWorld* world();
@@ -48,7 +48,7 @@ public:
     virtual void doSomething() = 0;
     bool poolSleeping();
     bool poolSleeping(bool changer);
-    
+        Direction randDir();
     void dirResolver(int &x, int &y, Direction dir);
     int sleeping(int changer);
     int biting(int canBite);

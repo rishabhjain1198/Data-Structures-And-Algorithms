@@ -47,8 +47,7 @@ int StudentWorld::init()
     //loading field was successful
     //time to get the contents of the field and start putting pebbles and grasshoppers
     
-    Compiler *compilerForEntrant0, *compilerForEntrant1,
-    *compilerForEntrant2, *compilerForEntrant3;
+
     
     compiledCorrectly[0] = false;       //this array keeps track of how many anthills should be created
     compiledCorrectly[1] = false;
@@ -411,6 +410,31 @@ void StudentWorld::cleanUp()
                 field[i][j][k].clear();
             }
         }
+    }
+    
+    //delete the compiler objects
+    int i = 0;
+    while(i < 4)
+    {
+        if(compiledCorrectly[i])
+        {
+            switch(i)
+            {
+                case 0:
+                    delete compilerForEntrant0;
+                    break;
+                case 1:
+                    delete compilerForEntrant1;
+                    break;
+                case 2:
+                    delete compilerForEntrant2;
+                    break;
+                case 3:
+                    delete compilerForEntrant3;
+                    break;
+            }
+        }
+        i++;
     }
 }
 

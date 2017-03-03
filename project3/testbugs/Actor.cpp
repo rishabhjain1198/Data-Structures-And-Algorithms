@@ -4,7 +4,7 @@
 // Students:  Add code to this file (if you wish), Actor.h, StudentWorld.h, and StudentWorld.cpp
 
 //--------------------AUX-FUNCTIONS-------------------
-Actor::Direction Actor::randDir()
+Actor::Direction Insect::randDir()
 {
     int i = randInt(1,4);       //create a random integer, and resolve it into a direction
     switch(i)
@@ -156,8 +156,9 @@ void Pebble::doSomething()
 
 //-----------------------BABY-GRASSHOPPER-----------------
 
-BabyGrasshopper::BabyGrasshopper(StudentWorld* const world, int const x, int const y) : Grasshopper(IID_BABY_GRASSHOPPER, randDir(), world, x, y)
+BabyGrasshopper::BabyGrasshopper(StudentWorld* const world, int const x, int const y) : Grasshopper(IID_BABY_GRASSHOPPER, right, world, x, y)
 {
+    setDirection(randDir());
     setHealth(500);             //starting health is 500
     biting(0);                  //bby grasshopper can't be bitten
 }
@@ -275,8 +276,9 @@ void Grasshopper::changeDist(int newDist)
 //-----------------------ADULT-GRASSHOPPER----------------
 
 
-AdultGrasshopper::AdultGrasshopper(StudentWorld* const world, int const x, int const y) : Grasshopper(IID_ADULT_GRASSHOPPER, randDir(), world, x, y)
+AdultGrasshopper::AdultGrasshopper(StudentWorld* const world, int const x, int const y) : Grasshopper(IID_ADULT_GRASSHOPPER, right, world, x, y)
 {
+    setDirection(randDir());
     setHealth(1600);                //adult grasshoppers start with 1600hp
     biting(50);                     //they have a biting power of 50
 }
@@ -516,8 +518,9 @@ void Anthill::doSomething()
 
 //--------------------------ANT-------------------------------------------
 
-Ant::Ant(int const idd, StudentWorld* const world, int const x, int const y, int const colony, Compiler* const tempo) : Insect(idd, 1, randDir(), world, x, y)
+Ant::Ant(int const idd, StudentWorld* const world, int const x, int const y, int const colony, Compiler* const tempo) : Insect(idd, 1, right, world, x, y)
 {
+    setDirection(randDir());
     setHealth(1500);
     m_foodHeld = 0;
     m_rowNumber = 0;
