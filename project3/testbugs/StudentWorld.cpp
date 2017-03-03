@@ -31,6 +31,30 @@ StudentWorld::StudentWorld(std::string assetDir)
 StudentWorld::~StudentWorld()
 {
     cleanUp();              //simply let the cleanUp function do the destructor's work
+    //delete the compiler objects
+    int i = 0;
+    while(i < 4)
+    {
+        if(compilerCreated[i])
+        {
+            switch(i)
+            {
+                case 0:
+                    delete compilerForEntrant0;
+                    break;
+                case 1:
+                    delete compilerForEntrant1;
+                    break;
+                case 2:
+                    delete compilerForEntrant2;
+                    break;
+                case 3:
+                    delete compilerForEntrant3;
+                    break;
+            }
+        }
+        i++;
+    }
 }
 
 int StudentWorld::init()
@@ -421,30 +445,7 @@ void StudentWorld::cleanUp()
         }
     }
     
-    //delete the compiler objects
-    int i = 0;
-    while(i < 4)
-    {
-        if(compilerCreated[i])
-        {
-            switch(i)
-            {
-                case 0:
-                    delete compilerForEntrant0;
-                    break;
-                case 1:
-                    delete compilerForEntrant1;
-                    break;
-                case 2:
-                    delete compilerForEntrant2;
-                    break;
-                case 3:
-                    delete compilerForEntrant3;
-                    break;
-            }
-        }
-        i++;
-    }
+    
 }
 
 void StudentWorld::addFood(int x, int y, int foodAmount, StudentWorld* myWorld)
