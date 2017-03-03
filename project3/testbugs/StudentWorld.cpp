@@ -54,6 +54,11 @@ int StudentWorld::init()
     compiledCorrectly[2] = false;
     compiledCorrectly[3] = false;
     
+    compilerCreated[0] = false;
+    compilerCreated[1] = false;
+    compilerCreated[2] = false;
+    compilerCreated[3] = false;
+    
     //Actor *ah0, *ah1, *ah2, *ah3;
     
     // get the names of all of the ant program source files
@@ -68,6 +73,7 @@ int StudentWorld::init()
     if(fileNames.size() > i){
 
         compilerForEntrant0 = new Compiler;
+        compilerCreated[0] = true;
         std::string error0;
     if ( ! compilerForEntrant0 -> compile(fileNames[0], error0) )
     {
@@ -88,6 +94,7 @@ int StudentWorld::init()
     if(fileNames.size() > i) {
     
     compilerForEntrant1 = new Compiler;
+        compilerCreated[1] = true;
     std::string error1;
     
     if ( ! compilerForEntrant1->compile(fileNames[1], error1) )
@@ -107,6 +114,7 @@ int StudentWorld::init()
     if(fileNames.size() > i) {
     
     compilerForEntrant2 = new Compiler;
+        compilerCreated[2] = true;
     std::string error2;
     
     if ( ! compilerForEntrant2->compile(fileNames[2], error2) )
@@ -125,6 +133,7 @@ int StudentWorld::init()
     
     if(fileNames.size() > i) {
     compilerForEntrant3 = new Compiler;
+        compilerCreated[3] = true;
     std::string error3;
     
     if ( ! compilerForEntrant3->compile(fileNames[3], error3) )
@@ -416,7 +425,7 @@ void StudentWorld::cleanUp()
     int i = 0;
     while(i < 4)
     {
-        if(compiledCorrectly[i])
+        if(compilerCreated[i])
         {
             switch(i)
             {

@@ -64,6 +64,7 @@ private:
     int antProduced [4];
     int tickCounter;
     bool compiledCorrectly[4];
+    bool compilerCreated[4];
     Compiler *compilerForEntrant0, *compilerForEntrant1,
     *compilerForEntrant2, *compilerForEntrant3;
     int winningAnt;
