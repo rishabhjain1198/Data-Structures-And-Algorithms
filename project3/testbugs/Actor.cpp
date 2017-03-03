@@ -4,7 +4,7 @@
 // Students:  Add code to this file (if you wish), Actor.h, StudentWorld.h, and StudentWorld.cpp
 
 //--------------------AUX-FUNCTIONS-------------------
-Actor::Direction Insect::randDir()
+Actor::Direction Actor::randDir()
 {
     int i = randInt(1,4);       //create a random integer, and resolve it into a direction
     switch(i)
@@ -726,6 +726,7 @@ void Ant::interpreter(Compiler::Command cmd, int &gotoif, bool &mustReturn, int 
             
             break;
     }
+     
 }
 
 
@@ -798,7 +799,7 @@ void Ant::doSomething()
                 {
                     if (m_compilerOwner -> getCommand(m_rowNumber,cmd))
                     {       //get command of that particular row number
-                        std::cout<<cmd.text<<std::endl;
+                       // std::cout<<cmd.text<<std::endl;
                     gotoif = 0; bool mustReturn = false;
                     interpreter(cmd, gotoif, mustReturn, tickCount);
                     wasBitten = false;
