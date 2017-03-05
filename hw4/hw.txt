@@ -1,2 +1,36 @@
 2. 
 value > p->m_value (Line 186) causes an error, since here, both LHS and RHS are defined to be of type Complex, and no comparison operator has been defined for this class. The compiler error given is “invalid operands to binary expression”.
+
+3b. 
+I would not be able to solve the problem with the given constraints using
+the single parameter listAll, because when we need to output the string in one
+iteration of the function, we need to remember information from the previous
+iteration, ie. the path of the previous iteration. Without that information
+given to the current iteration, it would be impossible to print the correct
+full path of a menu item. Hence, a two-parameter overload of listAll was
+essential to complete the recursion implementation.
+
+4a.
+The time complexity of this algorithm is O(N^3). This is because for every
+item from 0 to N-1, 3 iterations of items from 0 to N-1 are executed. Thus,
+the complexity becomes O(N*N*N) = O(N^3)
+
+4b.
+The time complexity of this algorithm is still O(N^3). This is because even
+though this will be much more efficient, in the worst case, the loop in the
+middle will still have an iteration with j<N which will run from 0 to N-1,
+thus making the time complexity O(N*N*N) = O(N^3).
+
+5a.
+The time complexity of interleave is O(N). This is because each a constant 
+number of operations are performed for each node for the 2 sequences.
+
+5b.
+The time complexity of interleave in this implementation is also O(N). This
+is because a constant number of operations is are performed for each node 
+in the list, and there are N number of nodes. This is a slightly better 
+implementation than in part a because the constant number of operations
+is less here than before, hence resulting in a slightly faster algorithm.
+However, this change is very small, and will be completely unnoticable for
+large values of N.
+
