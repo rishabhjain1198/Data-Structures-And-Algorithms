@@ -22,15 +22,19 @@ middle will still have an iteration with j<N which will run from 0 to N-1,
 thus making the time complexity O(N*N*N) = O(N^3).
 
 5a.
-The time complexity of interleave is O(N). This is because each a constant 
-number of operations are performed for each node for the 2 sequences.
+The time complexity of interleave is O(N^2). This is because there is a loop
+which iterates through all the N items in a sequence, and then uses the get 
+function for all of them, and in the worst case, the get function has the 
+complexity of N. The rest are all constant operations. Thus, the time 
+complexity is O(N*N) = O(N^2)
+
 
 5b.
-The time complexity of interleave in this implementation is also O(N). This
-is because a constant number of operations is are performed for each node 
-in the list, and there are N number of nodes. This is a slightly better 
-implementation than in part a because the constant number of operations
-is less here than before, hence resulting in a slightly faster algorithm.
-However, this change is very small, and will be completely unnoticable for
-large values of N.
+The time complexity of interleave in this implementation is O(N). This
+is because a constant number of constant operations are performed for each node 
+in both of the sequences, and there are N number of nodes in both of the
+sequences. Hence, we have a time complexity of O(N) in this case. This is a much 
+better implementation of interleave than part a because as N becomes larger and 
+larger, this implementation will perform much, much better since its complexity
+is linear.
 
