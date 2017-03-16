@@ -28,14 +28,15 @@ void AttractionMapperImpl::init(const MapLoader& ml)
     for(size_t i = 0; i < ml.getNumSegments(); i++)
     {
         StreetSegment seg;
+        
         if(!ml.getSegment(i, seg))
             return;
         
         for(int j = 0; j < seg.attractions.size(); j++)
         {
             //taking care of case
-            for(int i = 0; i < seg.attractions[j].name.size(); i++)
-                seg.attractions[j].name[i] = tolower(seg.attractions[j].name[i]);
+            for(int k = 0; k < seg.attractions[j].name.size(); k++)
+                seg.attractions[j].name[k] = tolower(seg.attractions[j].name[k]);
             
             mainMap.associate(seg.attractions[j].name, seg.attractions[j].geocoordinates);
         }

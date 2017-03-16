@@ -122,6 +122,7 @@ vector<StreetSegment> SegmentMapperImpl::getSegments(const GeoCoord& gc) const
         return empti;
     }
     
+    cout<<segments -> size()<<endl;
     return *segments;
 }
 
