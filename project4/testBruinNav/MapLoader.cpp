@@ -64,7 +64,7 @@ bool MapLoaderImpl::load(string mapFile)
         }
         
         i++;
-        i++;
+        i++;    //comment out this line if space is not present, basically if testmap.txt is to be followed
         
         while(latLongString[i] != ' ')
         {
@@ -126,7 +126,7 @@ bool MapLoaderImpl::load(string mapFile)
             }
             
             i++;
-            i++;
+            i++; //comment out this line if space is not there, basically if testmap.txt is to be followed
             
             while(i < attractionString.size())
             {
